@@ -1,0 +1,730 @@
+:root {
+    /* Định nghĩa các biến CSS để tái sử dụng trong toàn bộ stylesheet */
+    --main-color: #c0392b; /* Màu chính */
+    --body-bg: #181616; /* Màu nền của body */
+    --box-bg: #221f1f; /* Màu nền của các hộp */
+    --text-color: #ffffff; /* Màu chữ */
+
+    --nav-height: 60px; /* Chiều cao của thanh điều hướng */
+    --space-top: 30px; /* Khoảng cách trên cùng */
+}
+
+* {
+    /* Đặt lại padding và margin cho tất cả các phần tử, và thiết lập box-sizing là border-box */
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    /* Đặt kích thước font cơ bản */
+    font-size: 16px;
+}
+
+body {
+    /* Thiết lập font chữ và màu nền cho body */
+    font-family: "Cairo", sans-serif;
+    background-color: var(--body-bg);
+    color: var(--text-color);
+    padding-top: var(--nav-height); /* Khoảng cách trên cùng bằng với chiều cao của thanh điều hướng */
+}
+
+a {
+    /* Bỏ các kiểu mặc định của liên kết */
+    text-decoration: none;
+    color: unset;
+}
+
+img {
+    /* Đảm bảo hình ảnh không vượt quá chiều rộng của container */
+    max-width: 100%;
+}
+
+.main-color {
+    /* Áp dụng màu chính cho các phần tử có class này */
+    color: var(--main-color);
+}
+
+.container {
+    /* Thiết lập chiều rộng tối đa và căn giữa nội dung, với padding để tạo khoảng cách */
+    max-width: 1920px;
+    padding: 0 40px;
+    margin: auto;
+}
+
+.overlay {
+    /* Thiết lập lớp phủ */
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Màu nền đen với độ trong suốt */
+}
+
+.nav-wrapper {
+    /* Thiết lập cho thanh điều hướng */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 99;
+    background-color: #000000; /* Màu nền đen */
+}
+
+.nav {
+    /* Thiết lập cho nội dung của thanh điều hướng */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--text-color);
+    height: var(--nav-height); /* Chiều cao của thanh điều hướng */
+}
+
+.nav a {
+    /* Màu chữ cho các liên kết trong thanh điều hướng */
+    color: var(--text-color);
+}
+
+.logo {
+    /* Thiết lập kiểu chữ cho logo */
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+.nav-menu {
+    /* Thiết lập cho menu điều hướng */
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.nav-menu li ~ li {
+    /* Thiết lập khoảng cách giữa các mục menu */
+    margin-left: 30px;
+}
+
+.nav-menu a {
+    /* Thiết lập kiểu chữ cho các liên kết trong menu điều hướng */
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.nav-menu a:hover {
+    /* Thiết lập hiệu ứng hover cho các liên kết trong menu điều hướng */
+    color: var(--main-color);
+}
+
+.nav-menu a.btn:hover,
+a.logo:hover,
+a.movie-item:hover {
+    /* Bỏ màu khi hover cho các liên kết đặc biệt */
+    color: unset;
+}
+
+.btn {
+    /* Thiết lập cho các nút */
+    color: #ffffff;
+    padding: 0.25rem 1.5rem;
+    text-transform: uppercase;
+    font-size: 1.25rem;
+    font-weight: 700;
+    display: inline-flex;
+    position: relative;
+    align-items: center;
+}
+
+.btn-hover::before {
+    /* Thiết lập hiệu ứng hover cho các nút */
+    z-index: 1;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background-color: var(--main-color);
+    transition: 0.3s ease-in-out;
+}
+
+.btn-hover:hover::before {
+    /* Thiết lập hiệu ứng khi hover */
+    width: 100%;
+}
+
+.btn i,
+.btn span {
+    /* Thiết lập cho các phần tử bên trong nút */
+    z-index: 1;
+}
+
+.btn i {
+    /* Khoảng cách giữa icon và text trong nút */
+    margin-right: 1rem;
+}
+
+.hamburger-menu {
+    /* Thiết lập cho menu hamburger */
+    --size: 30px;
+    height: var(--size);
+    width: var(--size);
+    cursor: pointer;
+    z-index: 101;
+    position: relative;
+    display: none;
+    align-items: center;
+}
+
+.hamburger {
+    /* Thiết lập cho biểu tượng hamburger */
+    position: relative;
+}
+
+.hamburger,
+.hamburger::before,
+.hamburger::after {
+    /* Định nghĩa các thành phần của hamburger */
+    width: var(--size);
+    height: 3px;
+    border-radius: 0.5rem;
+    background-color: var(--text-color);
+    transition: 0.4s;
+}
+
+.hamburger::before,
+.hamburger::after {
+    /* Định nghĩa vị trí của các thanh trên và dưới */
+    content: "";
+    position: absolute;
+    left: 0;
+}
+
+.hamburger::before {
+    /* Vị trí của thanh trên */
+    top: -10px;
+}
+
+.hamburger::after {
+    /* Vị trí của thanh dưới */
+    bottom: -10px;
+}
+
+.hamburger-menu.active .hamburger {
+    /* Biểu tượng hamburger khi menu đang mở */
+    background-color: transparent;
+}
+
+.hamburger-menu.active .hamburger::before {
+    /* Hiệu ứng cho thanh trên khi menu đang mở */
+    transform-origin: top left;
+    transform: rotate(45deg);
+    left: 6px;
+}
+
+.hamburger-menu.active .hamburger::after {
+    /* Hiệu ứng cho thanh dưới khi menu đang mở */
+    transform-origin: bottom left;
+    transform: rotate(-45deg);
+    left: 6px;
+}
+
+.hero-slide-item {
+    /* Thiết lập cho các mục trong phần slide của hero */
+    padding-top: 40%;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-slide-item img {
+    /* Thiết lập cho hình ảnh trong phần slide của hero */
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.hero-slide-item-content {
+    /* Thiết lập nội dung của mục trong phần slide của hero */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--text-color);
+    display: flex;
+}
+
+.item-content-wraper {
+    /* Thiết lập cho nội dung bao bọc trong mục */
+    padding-left: 5rem;
+    width: 40%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+.item-content-wraper::before {
+    /* Hiệu ứng gradient cho nền */
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+}
+
+.item-content-title {
+    /* Thiết lập cho tiêu đề trong mục */
+    font-size: 5rem;
+    line-height: 5rem;
+    font-weight: 900;
+}
+
+.movie-infos {
+    /* Thiết lập cho thông tin phim */
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: calc(var(--space-top) / 2);
+}
+
+.movie-info {
+    /* Thiết lập cho mục thông tin phim */
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.movie-info span {
+    /* Khoảng cách giữa các span trong thông tin phim */
+    margin-left: 5px;
+}
+
+.movie-info i {
+    /* Màu cho icon trong thông tin phim */
+    color: var(--main-color);
+}
+
+.movie-info ~ .movie-info {
+    /* Khoảng cách giữa các mục thông tin phim */
+    margin-left: 5px;
+}
+
+.item-content-description {
+    /* Thiết lập cho mô tả trong mục */
+    font-size: 1.15rem;
+    margin-top: var(--space-top);
+    line-height: 1.5rem;
+}
+
+.item-action {
+    /* Thiết lập cho hành động trong mục */
+    margin-top: var(--space-top);
+}
+
+.carousel-nav-center {
+    /* Thiết lập cho điều hướng carousel ở giữa */
+    position: relative;
+}
+
+.carousel-nav-center .owl-nav button i {
+    /* Thiết lập icon cho các nút điều hướng carousel */
+    font-size: 3rem;
+}
+
+.carousel-nav-center .owl-nav button {
+    /* Thiết lập vị trí cho các nút điều hướng carousel */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.carousel-nav-center .owl-nav .owl-prev {
+    /* Vị trí cho nút điều hướng carousel trước */
+    position: absolute;
+    left: 5px;
+}
+
+.carousel-nav-center .owl-nav .owl-next {
+    /* Vị trí cho nút điều hướng carousel tiếp theo */
+    position: absolute;
+    right: 5px;
+}
+
+.owl-nav button {
+    /* Thiết lập cho các nút điều hướng carousel */
+    border: none;
+    outline: none;
+}
+
+.owl-nav button i {
+    /* Thiết lập nền cho icon trong nút điều hướng carousel */
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+}
+
+.owl-nav button:hover i {
+    /* Hiệu ứng hover cho icon trong nút điều hướng carousel */
+    color: var(--main-color);
+}
+
+.top-down {
+    /* Thiết lập hiệu ứng cho các phần tử từ trên xuống */
+    transform: translateY(-50px);
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s ease-in-out;
+}
+
+.delay-2 {
+    /* Độ trễ cho hiệu ứng chuyển động */
+    transition-delay: 0.2s;
+}
+
+.delay-4 {
+    /* Độ trễ cho hiệu ứng chuyển động */
+    transition-delay: 0.4s;
+}
+
+.delay-6 {
+    /* Độ trễ cho hiệu ứng chuyển động */
+    transition-delay: 0.6s;
+}
+
+.delay-8 {
+    /* Độ trễ cho hiệu ứng chuyển động */
+    transition-delay: 0.8s;
+}
+
+.owl-item.active .top-down {
+    /* Thiết lập hiệu ứng khi mục carousel đang hoạt động */
+    transform: translateY(0);
+    visibility: visible;
+    opacity: 1;
+}
+
+.movie-item {
+    /* Thiết lập cho các mục phim */
+    display: block;
+    position: relative;
+    overflow: hidden;
+    padding-top: 140%;
+    cursor: pointer;
+}
+
+.movie-item img {
+    /* Thiết lập cho hình ảnh trong mục phim */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transition: transform 0.3s linear;
+}
+
+.movie-item:hover img {
+    /* Hiệu ứng khi hover hình ảnh trong mục phim */
+    transform: scale(1.2);
+}
+
+.movie-item-content {
+    /* Thiết lập cho nội dung trong mục phim */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.movie-item-content::before {
+    /* Hiệu ứng gradient cho nền */
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+}
+
+.movie-item-title {
+    /* Thiết lập cho tiêu đề phim */
+    color: var(--text-color);
+    font-size: 1.5rem;
+    position: relative;
+    font-weight: 700;
+}
+
+.section {
+    /* Thiết lập cho các phần (section) */
+    padding-top: 80px;
+}
+
+.section-header {
+    /* Thiết lập cho tiêu đề của các phần */
+    margin-bottom: 30px;
+    padding-left: 20px;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    font-weight: 700;
+    border-left: 4px solid var(--main-color);
+    display: flex;
+    align-items: center;
+}
+
+.pricing-header {
+    /* Thiết lập cho tiêu đề của phần giá */
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.pricing-box {
+    /* Thiết lập cho các hộp giá */
+    padding: 50px;
+    margin: 15px 0;
+    background-color: var(--box-bg);
+    border-top: 5px solid transparent;
+    transition: transform 0.3s ease-in-out;
+}
+
+.pricing-box:hover {
+    /* Hiệu ứng khi hover hộp giá */
+    transform: translateY(-20px);
+}
+
+.pricing-box.hightlight {
+    /* Thiết lập cho hộp giá được nổi bật */
+    border-top: 5px solid var(--main-color);
+}
+
+.pricing-box-header {
+    /* Thiết lập cho tiêu đề của hộp giá */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.5rem;
+}
+
+.pricing-price {
+    /* Thiết lập cho giá trong hộp giá */
+    font-weight: 700;
+}
+
+.pricing-price span {
+    /* Thiết lập kích thước chữ cho giá */
+    font-size: 1rem;
+}
+
+.pricing-box-content {
+    /* Thiết lập nội dung cho hộp giá */
+    text-align: center;
+    margin-top: 60px;
+    font-size: 1.25rem;
+}
+
+.pricing-box-action {
+    /* Thiết lập hành động trong hộp giá */
+    text-align: center;
+    margin-top: 60px;
+}
+
+footer.section {
+    /* Thiết lập cho phần footer */
+    margin-top: 80px;
+    padding-bottom: 80px;
+    position: relative;
+    background-color: var(--box-bg);
+}
+
+footer a:hover {
+    /* Hiệu ứng hover cho các liên kết trong footer */
+    color: var(--main-color);
+}
+
+footer a.logo {
+    /* Thiết lập cho logo trong footer */
+    margin-top: -2.5rem;
+    display: block;
+}
+
+footer a.logo:hover {
+    /* Bỏ hiệu ứng hover cho logo */
+    color: unset;
+}
+
+.social-list {
+    /* Thiết lập cho danh sách mạng xã hội */
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.social-item {
+    /* Thiết lập cho các mục mạng xã hội */
+    --size: 30px;
+    height: var(--size);
+    width: var(--size);
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background-color: var(--text-color);
+    color: var(--main-color);
+}
+
+.social-item:hover {
+    /* Hiệu ứng hover cho các mục mạng xã hội */
+    background-color: var(--main-color);
+    color: var(--text-color);
+}
+
+.social-item ~ .social-item {
+    /* Khoảng cách giữa các mục mạng xã hội */
+    margin-left: 20px;
+}
+
+footer .content {
+    /* Thiết lập cho nội dung trong footer */
+    margin-top: 20px;
+}
+
+.footer-menu {
+    /* Thiết lập cho menu trong footer */
+    list-style-type: none;
+}
+
+.footer-menu a {
+    /* Hiệu ứng cho các liên kết trong menu footer */
+    display: inline-block;
+    transition: transform 0.2s ease-in-out;
+}
+
+.footer-menu a:hover {
+    /* Hiệu ứng khi hover liên kết trong menu footer */
+    transform: translateX(5px);
+}
+
+.copyright {
+    /* Thiết lập cho phần bản quyền */
+    padding: 10px;
+    border-top: 1px solid var(--body-bg);
+    background-color: var(--box-bg);
+    text-align: center;
+}
+
+/* RESPONSIVE */
+/* Thiết lập cho các thiết bị với kích thước màn hình khác nhau */
+@media only screen and (max-width: 1280px) {
+    html {
+        /* Giảm kích thước font */
+        font-size: 14px;
+    }
+
+    .hero-slide-item {
+        /* Tăng chiều cao padding top cho mục hero slide */
+        padding-top: 50%;
+    }
+
+    .item-content-wraper {
+        /* Tăng chiều rộng của nội dung bao bọc */
+        width: 50%;
+    }
+}
+
+@media only screen and (max-width: 850px) {
+    html {
+        /* Giảm kích thước font */
+        font-size: 12px;
+    }
+
+    .container {
+        /* Giảm padding cho container */
+        padding: 0 15px;
+    }
+
+    .hero-slide-item {
+        /* Thiết lập chiều cao tối đa cho mục hero slide */
+        height: max-content;
+        padding-top: unset;
+    }
+
+    .item-content-wraper {
+        /* Thiết lập chiều rộng và chiều cao của nội dung bao bọc */
+        width: 100%;
+        height: 100%;
+        padding-bottom: 20px;
+        padding-right: 5rem;
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .hero-slide-item-content {
+        /* Thiết lập vị trí của nội dung trong mục hero slide */
+        position: relative;
+    }
+
+    .hero-slide-item img {
+        /* Thiết lập chiều cao của hình ảnh trong mục hero slide */
+        height: 100%;
+    }
+
+    .item-content-title {
+        /* Giảm kích thước font của tiêu đề trong mục */
+        font-size: 3rem;
+    }
+
+    .hamburger-menu {
+        /* Hiển thị menu hamburger */
+        display: grid;
+    }
+
+    .nav-menu {
+        /* Thiết lập lại menu điều hướng */
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        top: 0;
+        left: 100%;
+        z-index: 100;
+        background-color: rgba(0, 0, 0, 0.9);
+        backdrop-filter: blur(2px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        transition: 0.3s;
+    }
+
+    .nav-menu.active {
+        /* Thiết lập khi menu đang hoạt động */
+        left: 0;
+    }
+
+    .nav-menu li {
+        /* Thiết lập khoảng cách cho các mục trong menu điều hướng */
+        margin-bottom: 30px;
+    }
+
+    .btn {
+        /* Thiết lập cho các nút */
+        padding: 0.25rem 1rem;
+        font-size: 1rem;
+    }
+
+    .btn i {
+        /* Thiết lập cho icon trong nút */
+        margin-right: 0.5rem;
+    }
+
+    .pricing-box-content,
+    .pricing-box-action {
+        /* Giảm margin cho nội dung và hành động trong hộp giá */
+        margin-top: 30px;
+    }
+}
